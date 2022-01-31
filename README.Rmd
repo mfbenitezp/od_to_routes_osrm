@@ -35,7 +35,7 @@ od_df = as_tibble(od_matrix)
 names(od_df)[1] = names(origins)[1]
 names(od_df)[2] = "OID_D"
 od_df_o = left_join(od_df, origins)
-names(destinations)[1] = "OID_D"
+names(destinations_updated)[1] = "OID_D"
 od_df_od = left_join(od_df_o, destinations_updated)
 od_df_od_distinct = od_df_od %>% 
   distinct(Lat, Long, tx, ty, .keep_all = TRUE)
@@ -48,7 +48,7 @@ od_sf$destination_id = od_df_od_distinct$OID_D
 od_sf$length = as.numeric(sf::st_length(od_sf))
 summary(od_sf$length)
 od_sf_short = od_sf %>% 
-  filter(length < 2000000)
+  filter(length < 2000)
 
 od_sf_short %>% 
   qtm()
